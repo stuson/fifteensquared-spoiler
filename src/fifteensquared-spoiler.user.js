@@ -40,6 +40,26 @@
         });
     };
 
+    const toggleAnswer = (ans) => {
+        if (ans.classList.contains("revealed")) {
+            hideAnswer(ans);
+        } else {
+            revealAnswer(ans);
+        }
+    };
+
+    const revealAnswer = (ans) => {
+        const ansId = ans.dataset.ansId;
+        ans.classList.add("revealed");
+        localStorage.setItem(ansId, 1);
+    };
+
+    const hideAnswer = (ans) => {
+        const ansId = ans.dataset.ansId;
+        ans.classList.remove("revealed");
+        localStorage.removeItem(ansId);
+    };
+
     const addSpoilers = () => {
         const testRow = (row) => {
             const el = row.firstElementChild;
@@ -50,16 +70,6 @@
             return false;
         };
 
-        const toggleSpoiler = (ans, ansId) => {
-            if (ans.classList.contains("revealed")) {
-                ans.classList.remove("revealed");
-                localStorage.removeItem(ansId);
-            } else {
-                ans.classList.add("revealed");
-                localStorage.setItem(ansId, 1);
-            }
-        };
-
         const path = window.location.pathname;
         const rows = document.querySelectorAll(".entry-content tr");
         const updatedRows = Array.from(rows).map((row, rowIdx) => {
@@ -68,7 +78,8 @@
                     const ansId = `${path}~~${rowIdx}~~${ansIdx}`;
                     if (localStorage.getItem(ansId)) ans.classList.add("revealed");
                     ans.classList.add("spoiler");
-                    ans.addEventListener("click", (e) => toggleSpoiler(e.target, ansId));
+                    ans.dataset.ansId = ansId;
+                    ans.addEventListener("click", () => toggleAnswer(ans));
                 });
 
                 return row;
@@ -82,6 +93,34 @@
         const content = document.querySelector(".entry-content");
         content.classList.add("spoiler-warning");
         content.addEventListener("click", (e) => e.target.classList.remove("spoiler-warning"));
+    };
+
+    const addSpoilerControls = () => {
+        const setAllAnswers = (revealed) => {
+            if (revealed) {
+                document.querySelectorAll(".spoiler").forEach((ans) => revealAnswer(ans));
+            } else {
+                document.querySelectorAll(".spoiler").forEach((ans) => hideAnswer(ans));
+            }
+        };
+
+        const controls = document.createElement("div");
+        controls.className = "spoiler-controls";
+
+        const revealAllBtn = document.createElement("button");
+        revealAllBtn.type = "button";
+        revealAllBtn.textContent = "Reveal all";
+        revealAllBtn.addEventListener("click", () => setAllAnswers(true));
+        controls.appendChild(revealAllBtn);
+
+        const hideAllBtn = document.createElement("button");
+        hideAllBtn.className = "secondary-button";
+        hideAllBtn.type = "button";
+        hideAllBtn.textContent = "Hide all";
+        hideAllBtn.addEventListener("click", () => setAllAnswers(false));
+        controls.appendChild(hideAllBtn);
+
+        document.querySelector(".entry-content").prepend(controls);
     };
 
     const css = {
@@ -115,8 +154,15 @@
             content:
                 "'WARNING: Fifteensquared Spoiler could not find any answers to block. Click this message to reveal the whole page at once.'",
         },
+        ".spoiler-controls > button": {
+            marginRight: "10px",
+        },
+        ".secondary-button": {
+            backgroundColor: "#595959",
+        },
     };
 
     addStyle(css);
     addSpoilers();
+    addSpoilerControls();
 })();
