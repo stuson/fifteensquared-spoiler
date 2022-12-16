@@ -10,7 +10,7 @@ Hides all answers and explanations for cryptic crosswords on [Fifteensquared](ht
 
 ## Installation
 
--   Open the [latest user script](releases/latest/download/fifteensquared-spoiler.user.js)
+-   Open the [latest user script](../../releases/latest/download/fifteensquared-spoiler.user.js)
 -   Click install
 
 ## Usage
