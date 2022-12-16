@@ -50,16 +50,25 @@
             return false;
         };
 
-        const toggleSpoiler = (e) => {
-            e.target.classList.toggle("revealed");
+        const toggleSpoiler = (ans, ansId) => {
+            if (ans.classList.contains("revealed")) {
+                ans.classList.remove("revealed");
+                localStorage.removeItem(ansId);
+            } else {
+                ans.classList.add("revealed");
+                localStorage.setItem(ansId, 1);
+            }
         };
 
+        const path = window.location.pathname;
         const rows = document.querySelectorAll(".entry-content tr");
-        const updatedRows = Array.from(rows).map((row) => {
+        const updatedRows = Array.from(rows).map((row, rowIdx) => {
             if (testRow(row)) {
-                row.querySelectorAll("td:nth-of-type(n+2)").forEach((a) => {
-                    a.classList.add("spoiler");
-                    a.addEventListener("click", toggleSpoiler);
+                row.querySelectorAll("td:nth-of-type(n+2)").forEach((ans, ansIdx) => {
+                    const ansId = `${path}~~${rowIdx}~~${ansIdx}`;
+                    if (localStorage.getItem(ansId)) ans.classList.add("revealed");
+                    ans.classList.add("spoiler");
+                    ans.addEventListener("click", (e) => toggleSpoiler(e.target, ansId));
                 });
 
                 return row;
