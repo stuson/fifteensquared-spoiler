@@ -66,28 +66,45 @@
             }
         });
 
-        if (updatedRows.length < 1) console.warn("No spoilers added");
+        if (updatedRows.length < 1) showWarning();
+    };
+
+    const showWarning = () => {
+        const content = document.querySelector(".entry-content");
+        content.classList.add("spoiler-warning");
+        content.addEventListener("click", (e) => e.target.classList.remove("spoiler-warning"));
     };
 
     const css = {
-        ".spoiler": {
+        ".spoiler, .spoiler-warning": {
             position: "relative",
+        },
+        ".spoiler": {
             padding: "2px 5px",
         },
-        ".spoiler:hover": {
+        ".spoiler:hover, .spoiler-warning:hover": {
             opacity: "0.8",
+        },
+        ".spoiler::after, .spoiler-warning::after": {
+            display: "block",
+            position: "absolute",
+            inset: "0",
+            padding: "10px",
+            backgroundColor: "rgba(12, 12, 12, 1.0)",
+            color: "#fff",
+            cursor: "pointer",
         },
         ".spoiler::after": {
             content: "''",
-            position: "absolute",
-            inset: "0",
             margin: "2px",
-            backgroundColor: "rgba(12, 12, 12, 1.0)",
-            cursor: "pointer",
             transition: "background-color 0.1s ease-in-out",
         },
         ".spoiler.revealed::after": {
             backgroundColor: "rgba(12, 12, 12, 0.08)",
+        },
+        ".spoiler-warning::after": {
+            content:
+                "'WARNING: Fifteensquared Spoiler could not find any answers to block. Click this message to reveal the whole page at once.'",
         },
     };
 
