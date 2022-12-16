@@ -13,6 +13,6 @@ Hides all answers and explanations for cryptic crosswords on [Fifteensquared](ht
 
 ## Usage
 
-Click on a blocked-out answer to reveal it. Click again to block it out again. Answers and explanations can be revealed separately. Use the "reveal all" and "block all" buttons to control all items at once.
+Click on a blocked-out answer to reveal it. Click again to block it out again. Answers and explanations can be revealed separately. Use the "reveal all" and "hide all" buttons to control all items at once.
 
 Your browser will save which answers you have previously revealed if you close the page and come back later.
