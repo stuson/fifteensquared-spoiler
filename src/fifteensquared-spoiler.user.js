@@ -7,7 +7,7 @@
 // @version      0.1
 // @description  Hides all answers and explanations for cryptic crosswords on Fifteensquared behind toggleable spoilers.
 // @author       Sam Tuson
-// @match        https://www.fifteensquared.net/*/*/*/*/
+// @match        https://www.fifteensquared.net/*/*/*/*/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=tampermonkey.net
 // @license      MIT
 // @grant        none
@@ -86,7 +86,11 @@
             }
         });
 
-        if (updatedRows.length < 1) showWarning();
+        if (updatedRows.length < 1) {
+            showWarning();
+        } else {
+            addSpoilerControls();
+        }
     };
 
     const showWarning = () => {
@@ -164,5 +168,4 @@
 
     addStyle(css);
     addSpoilers();
-    addSpoilerControls();
 })();
