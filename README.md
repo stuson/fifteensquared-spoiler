@@ -2,6 +2,8 @@
 
 Hides all answers and explanations for cryptic crosswords on [Fifteensquared](https://fifteensquared.net/). This script aims to let you find help with parsing an answer you found, or get a single answer while you're completely stumped without accidentally seeing other answers before you're ready.
 
+![Example screenshot](img/screenshot.png)
+
 ## Requirements
 
 -   A userscript manager such as [Tampermonkey](https://www.tampermonkey.net/)
